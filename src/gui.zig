@@ -1,10 +1,15 @@
 const std = @import("std");
+const zio = @import("zio");
+const tui = @import("tui.zig");
 
 pub fn start_gui() !void {}
 
 pub fn main() !void {
     // Prints to stderr (it's a shortcut based on `std.io.getStdErr()`)
     // std.debug.print("All your {s} are belong to us.\n", .{"codebase"});
+
+    var gpa = std.heap.GeneralPurposeAllocator(.{}){};
+    defer _ = gpa.deinit();
 
     // stdout is for the actual output of your application, for example if you
     // are implementing gzip, then only the compressed bytes should be sent to
@@ -15,6 +20,7 @@ pub fn main() !void {
 
     try stdout.print("Hello World from zio gui.\n", .{});
 
+    try zio.parse_args(gpa.allocator());
     try start_gui();
 
     try bw.flush(); // don't forget to flush!

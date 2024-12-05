@@ -2,7 +2,7 @@
 Serial terminal with advanced log analysis and plotting capabilities written in Zig.
 
 ## Build & Run
-- Run tui: `zig build run`
+- Run tui: `zig build run-tui`
 - Run gui: `zig build run-gui`
 
 ## Goals for the project

@@ -16,13 +16,16 @@ pub fn build(b: *std.Build) void {
     const optimize = b.standardOptimizeOption(.{});
 
     const lib = b.addStaticLibrary(.{
-        .name = "lib-zio",
+        .name = "zio",
         // In this case the main source file is merely a path, however, in more
         // complicated build scripts, this could be a generated file.
         .root_source_file = b.path("src/zio.zig"),
         .target = target,
         .optimize = optimize,
     });
+
+    const clap = b.dependency("clap", .{});
+    lib.root_module.addImport("clap", clap.module("clap"));
 
     // This declares intent for the library to be installed into the standard
     // location when the user invokes the "install" step (the default step when
@@ -35,6 +38,8 @@ pub fn build(b: *std.Build) void {
         .target = target,
         .optimize = optimize,
     });
+
+    tui_exe.root_module.addImport("zio", &lib.root_module);
 
     // This declares intent for the executable to be installed into the
     // standard location when the user invokes the "install" step (the default
@@ -61,7 +66,7 @@ pub fn build(b: *std.Build) void {
     // This creates a build step. It will be visible in the `zig build --help` menu,
     // and can be selected like this: `zig build run`
     // This will evaluate the `run` step rather than the default, which is "install".
-    const tui_run_step = b.step("run", "Run the app");
+    const tui_run_step = b.step("run-tui", "Run the app");
     tui_run_step.dependOn(&tui_run_cmd.step);
 
     const gui_exe = b.addExecutable(.{
@@ -70,6 +75,8 @@ pub fn build(b: *std.Build) void {
         .target = target,
         .optimize = optimize,
     });
+
+    gui_exe.root_module.addImport("zio", &lib.root_module);
 
     // This declares intent for the executable to be installed into the
     // standard location when the user invokes the "install" step (the default
@@ -98,6 +105,9 @@ pub fn build(b: *std.Build) void {
     // This will evaluate the `run` step rather than the default, which is "install".
     const gui_run_step = b.step("run-gui", "Run the app");
     gui_run_step.dependOn(&gui_run_cmd.step);
+
+    const run_step = b.step("run", "Run the app");
+    run_step.dependOn(&gui_run_cmd.step);
 
     // Creates a step for unit testing. This only builds the test executable
     // but does not run it.
