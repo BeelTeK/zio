@@ -27,6 +27,12 @@
             .url = "https://github.com/Hejsil/zig-clap/archive/refs/tags/0.9.1.tar.gz",
             .hash = "122062d301a203d003547b414237229b09a7980095061697349f8bef41be9c30266b",
         },
+        .dvui = .{
+            //.url = "https://github.com/david-vanderson/dvui/archive/v0.1.0.tar.gz",
+            //.hash = "1220809b3fef9e2ae3a3c86ad92daa5640f456749dc4cf25ae32d76e31e9d3495333",
+            .url = "https://github.com/david-vanderson/dvui/archive/316de718eef5166cbdf9125656b35abaeb621445.tar.gz",
+            .hash = "12202bc99ddacde83c39ae59dc29b31b192ea20c9c67f62a4cffb19b2d2a31f0bccb",
+        },
     },
     .paths = .{
         "build.zig",

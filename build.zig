@@ -78,6 +78,9 @@ pub fn build(b: *std.Build) void {
 
     gui_exe.root_module.addImport("zio", &lib.root_module);
 
+    const dvui_dep = b.dependency("dvui", .{ .target = target, .optimize = optimize });
+    gui_exe.root_module.addImport("dvui", dvui_dep.module("dvui_sdl"));
+
     // This declares intent for the executable to be installed into the
     // standard location when the user invokes the "install" step (the default
     // step when running `zig build`).
