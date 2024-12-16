@@ -28,7 +28,7 @@ pub fn start_gui(gpa: std.mem.Allocator) !void {
         .size = .{ .w = 800.0, .h = 600.0 },
         .min_size = .{ .w = 250.0, .h = 350.0 },
         .vsync = vsync,
-        .title = "DVUI SDL Standalone Example",
+        .title = "ZIOg - Zig Serial IO & Log Analysis GUI",
         .icon = window_icon_png, // can also call setIconFromFileContent()
     });
     g_backend = backend;
