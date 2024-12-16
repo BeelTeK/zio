@@ -33,6 +33,12 @@
             .url = "https://github.com/david-vanderson/dvui/archive/316de718eef5166cbdf9125656b35abaeb621445.tar.gz",
             .hash = "12202bc99ddacde83c39ae59dc29b31b192ea20c9c67f62a4cffb19b2d2a31f0bccb",
         },
+        .vaxis = .{
+            // .url = "https://github.com/rockorager/libvaxis/archive/refs/tags/v0.5.1.tar.gz",
+            // .hash = "1220de23a3240e503397ea579de4fd85db422f537e10036ef74717c50164475813ce",
+            .url = "https://github.com/rockorager/libvaxis/archive/d4ad04b1fe79b1eac2dbb1c5699ed6668723dcf5.zip",
+            .hash = "1220381e092855763e15d3b34c1f98abab38f4f618018db5e68b0c56452dbd3caf7b",
+        },
     },
     .paths = .{
         "build.zig",

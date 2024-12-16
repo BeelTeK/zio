@@ -41,6 +41,12 @@ pub fn build(b: *std.Build) void {
 
     tui_exe.root_module.addImport("zio", &lib.root_module);
 
+    const vaxis_dep = b.dependency("vaxis", .{
+        .target = target,
+        .optimize = optimize,
+    });
+    tui_exe.root_module.addImport("vaxis", vaxis_dep.module("vaxis"));
+
     // This declares intent for the executable to be installed into the
     // standard location when the user invokes the "install" step (the default
     // step when running `zig build`).
