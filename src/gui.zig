@@ -208,10 +208,13 @@ pub fn main() !void {
     defer _ = gpa_impl.deinit();
     const gpa = gpa_impl.allocator();
 
-    try zio.parse_args(gpa);
-
     var ctx = try zio.ZioContext.init(gpa, zio.LogLevel.info);
     defer ctx.deinit();
+
+    const args_ok = try zio.parse_args(gpa);
+    if (!args_ok) {
+        return;
+    }
 
     // Create metadata
     const metadata = zio.LogMetadata{

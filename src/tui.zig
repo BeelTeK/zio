@@ -77,6 +77,11 @@ pub fn main() !void {
     var ctx = try zio.ZioContext.init(gpa, zio.LogLevel.info);
     defer ctx.deinit();
 
+    const args_ok = try zio.parse_args(gpa);
+    if (!args_ok) {
+        return;
+    }
+
     // Create metadata
     const metadata = zio.LogMetadata{
         .timestamp = std.time.timestamp(),
@@ -88,7 +93,6 @@ pub fn main() !void {
 
     try ctx.logger.log(.info, "Hello World from zio tui.", .{}, metadata);
 
-    try zio.parse_args(gpa);
     try start_tui(gpa);
 }
 
