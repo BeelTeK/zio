@@ -2,6 +2,7 @@ const std = @import("std");
 const testing = std.testing;
 
 const clap = @import("clap");
+const nexlog = @import("nexlog");
 
 pub fn parse_args(gpa: std.mem.Allocator) !void {
     // First we specify what parameters our program can take.
@@ -37,6 +38,34 @@ pub fn parse_args(gpa: std.mem.Allocator) !void {
     for (res.positionals) |pos|
         std.debug.print("{s}\n", .{pos});
 }
+
+pub const LogLevel = nexlog.LogLevel;
+pub const LogMetadata = nexlog.LogMetadata;
+
+pub const ZioContext = struct {
+    gpa: std.mem.Allocator,
+    logger: *nexlog.Logger,
+
+    pub fn init(gpa: std.mem.Allocator, log_level: LogLevel) !ZioContext {
+        // Initialize with builder pattern
+        var builder = nexlog.LogBuilder.init(); // Create a mutable LogBuilder instance
+        try builder
+            .setMinLevel(log_level)
+            .enableColors(true)
+            .enableFileLogging(true, "app.log")
+            .build(gpa);
+
+        const logger = nexlog.getDefaultLogger().?;
+        return ZioContext{
+            .gpa = gpa,
+            .logger = logger,
+        };
+    }
+
+    pub fn deinit(self: *ZioContext) void {
+        self.logger.deinit();
+    }
+};
 
 export fn add(a: i32, b: i32) i32 {
     return a + b;

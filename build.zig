@@ -27,6 +27,13 @@ pub fn build(b: *std.Build) void {
     const clap = b.dependency("clap", .{});
     lib.root_module.addImport("clap", clap.module("clap"));
 
+    const nexlog = b.dependency("nexlog", .{
+        .target = target,
+        .optimize = optimize,
+    });
+
+    lib.root_module.addImport("nexlog", nexlog.module("nexlog"));
+
     // This declares intent for the library to be installed into the standard
     // location when the user invokes the "install" step (the default step when
     // running `zig build`).

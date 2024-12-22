@@ -204,26 +204,27 @@ fn gui_frame() !void {
 }
 
 pub fn main() !void {
-    // Prints to stderr (it's a shortcut based on `std.io.getStdErr()`)
-    // std.debug.print("All your {s} are belong to us.\n", .{"codebase"});
-
     var gpa_impl = std.heap.GeneralPurposeAllocator(.{}){};
     defer _ = gpa_impl.deinit();
     const gpa = gpa_impl.allocator();
 
-    // stdout is for the actual output of your application, for example if you
-    // are implementing gzip, then only the compressed bytes should be sent to
-    // stdout, not any debugging messages.
-    const stdout_file = std.io.getStdOut().writer();
-    var bw = std.io.bufferedWriter(stdout_file);
-    const stdout = bw.writer();
-
-    try stdout.print("Hello World from zio gui.\n", .{});
-
     try zio.parse_args(gpa);
-    try start_gui(gpa);
 
-    try bw.flush(); // don't forget to flush!
+    var ctx = try zio.ZioContext.init(gpa, zio.LogLevel.info);
+    defer ctx.deinit();
+
+    // Create metadata
+    const metadata = zio.LogMetadata{
+        .timestamp = std.time.timestamp(),
+        .thread_id = 0,
+        .file = @src().file,
+        .line = @src().line,
+        .function = @src().fn_name,
+    };
+
+    try ctx.logger.log(.info, "Hello World from zio gui.", .{}, metadata);
+
+    try start_gui(gpa);
 }
 
 test "simple test" {

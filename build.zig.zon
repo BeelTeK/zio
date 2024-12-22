@@ -36,8 +36,12 @@
         .vaxis = .{
             // .url = "https://github.com/rockorager/libvaxis/archive/refs/tags/v0.5.1.tar.gz",
             // .hash = "1220de23a3240e503397ea579de4fd85db422f537e10036ef74717c50164475813ce",
-            .url = "https://github.com/rockorager/libvaxis/archive/d4ad04b1fe79b1eac2dbb1c5699ed6668723dcf5.zip",
+            .url = "https://github.com/rockorager/libvaxis/archive/d4ad04b1fe79b1eac2dbb1c5699ed6668723dcf5.tar.gz",
             .hash = "1220381e092855763e15d3b34c1f98abab38f4f618018db5e68b0c56452dbd3caf7b",
+        },
+        .nexlog = .{
+            .url = "git+https://github.com/chrischtel/nexlog/#6166b0805701f4f0cee37f538b491954766e0cb0",
+            .hash = "12204cd696eccc31dd208291adb74fb97dac95639a816b1a0982e60ff61a8e959fe1",
         },
     },
     .paths = .{
